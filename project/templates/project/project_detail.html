@@ -1,0 +1,1073 @@
+ {% extends 'department/base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+
+
+
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card card-primary card-outline">
+        <div class="card-header">
+          <h5 class="m-0">Project Details</h5>
+        </div>
+
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+              {% if department.name != "none" %}
+
+                <div class="card card-primary">
+                  <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                    <h3 class="card-title">Project Time Span</h3>
+                  </div>
+
+                    <div class="card-body">  
+
+                      <p id="ray_counter"></p>
+                      <b>{{ counter }}</b>
+
+
+                    </div>
+                  </div>
+           
+
+              {% endif %}
+            </div>
+          </div>
+
+            <div class="row">
+              <div class="col-lg-8 col-md-8 col-sm-12">
+                <div class="card card-primary">
+                    <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                      <h3 class="card-title">{{ project.title }}'s Full Details</h3>
+                    </div>
+
+                    <div class="card-body p-0">
+                      <ul class="products-list product-list-in-card pl-2 pr-2">
+
+                            <li class="item">
+                              <div>
+                                Project Details
+                                <span class="product-description">
+                                  {{ project.title }} | {{ project.project_id }}
+                                </span>
+                              </div>
+                            </li>
+
+                            <li class="item">
+                              <div>
+                                Production Status
+                                <span class="product-description">
+                                  {{ project.status }}
+                                </span>
+                              </div>
+                            </li>
+
+                            <li class="item">
+                              <div>
+                                Delivery Date
+                                <span class="product-description">
+                                  {{ project.delivery_date }}
+                                </span>
+                              </div>
+                            </li>
+
+                            <li class="item">
+                              <div>
+                                Work Order Details
+                                <span class="product-description">
+                                  {% if project.work_order %}
+                                    <a href="{{ project.brief.work_order.url }}" download> Work Order. </a> |
+                                    <b>{{ project.project_id }}</b>
+                                  {% endif %}
+                                </span>
+                              </div>
+                            </li>
+
+
+                            {% if department.name == "material-estimate" or department.name == "project-service" or department.name == "ict" %}
+
+                            <li class="item">
+                              <div>
+                                Material Estimate
+                                <span class="product-description">
+
+                                    {% if project.material_estimate %}
+                                    <a href="{{ project.material_estimate.url }}" download> Material Estimate </a>
+                                    {% else %}
+                                      <b>Sorry, Nothing Yet!</b>
+                                    {% endif %}
+
+                                </span>
+                              </div>
+                            </li>
+
+                            {% endif %}
+
+
+
+                            {% if project.project_type == "not_upholstery" %}
+
+
+                              {% if department.name == "cutlist" or department.name == "assembly" or department.name == "cutting" or department.name == "cnc" or department.name == "edge-banding" or department.name == "project-service" or department.name == "ict" %}
+
+                              <li class="item">
+                                <div>
+                                  Optimized Production Drawings
+                                  <span class="product-description">
+
+                                      {% if project.optimized_production_drawing %}
+                                      <a href="{{ project.optimized_production_drawing.url }}" download> Optimized Production Drawing </a>
+                                      {% else %}
+                                        <b>Sorry, Nothing Yet!</b>
+                                      {% endif %}
+
+                                  </span>
+                                </div>
+                              </li>
+
+                              {% if department.name == "cutting" or department.name == "project-service" or department.name == "ict" %}
+
+                                <li class="item">
+                                  <div>
+                                    Cutting Details
+                                    <span class="product-description">
+                                      {% if project.cutting_detail == True %}
+                                        <b style="color: green;">Yes!, this project has reached the cutting section!</b>
+
+                                      {% else %}
+                                        <b style="color: red;">No!, this project hasn't reached the cutting section!</b>
+                                      {% endif %}
+                                    </span>
+                                  </div>
+                                </li>
+
+                              {% endif %}
+
+
+                              {% if department.name == "edge-banding" or department.name == "project-service" or department.name == "ict" %}
+                                <li class="item">
+                                  <div>
+                                    Edge Banding Details
+                                    <span class="product-description">
+                                      {% if project.edge_banding_detail == True %}
+                                        <b style="color: green;">Yes!, this project has reached the !</b>
+
+                                      {% else %}
+                                        <b style="color: red;">No!, this project hasn't been assesmbled!</b>
+                                      {% endif %}
+                                    </span>
+                                  </div>
+                                </li>
+
+                              {% endif %}
+
+
+                              {% if department.name == "cnc" or department.name == "project-service" or department.name == "ict" %}
+
+                                <li class="item">
+                                  <div>
+                                    CNC Details
+                                    <span class="product-description">
+                                      {% if project.cnc_detail == True %}
+                                        <b style="color: green;">Yes!, this project has reached the cnc section!</b>
+
+                                      {% else %}
+                                        <b style="color: red;">No!, this project hasn't reached the cnc section!</b>
+                                      {% endif %}
+                                    </span>
+                                  </div>
+                                </li>
+
+                              {% endif %}
+
+                              {% if department.name == "assembly" or department.name == "project-service" or department.name == "ict" %}
+
+
+
+                              <li class="item">
+                                <div>
+                                  Assembly Details
+                                  <span class="product-description">
+                                    {% if project.assembly == True %}
+                                      <b style="color: green;">Yes!, this project has been assembled!</b>
+
+                                    {% else %}
+                                      <b style="color: red;">No!, this project hasn't been assesmbled!</b>
+                                    {% endif %}
+                                  </span>
+                                </div>
+                              </li>
+
+                              {% endif %}
+
+                              {% endif %}
+
+
+                            {% endif %}
+
+                          
+
+                          {% if project.project_type == "upholstery" %}
+
+                            {% if department.name == "upholstery" or department.name == "project-service" or department.name == "ict" %}
+
+                              <li class="item">
+                                <div>
+                                  Upholstery Design Quotation
+                                  <span class="product-description">
+
+                                      {% if project.u_design_quotation %}
+                                      <a href="{{ project.u_design_quotation.url }}" download> Design Quotation </a>
+                                      {% else %}
+                                        <b>Sorry, Nothing Yet!</b>
+                                      {% endif %}
+
+                                  </span>
+                                </div>
+                              </li>
+
+                              <li class="item">
+                                <div>
+                                  Upholstery Production Drawing
+                                  <span class="product-description">
+
+                                      {% if project.u_production_drawing %}
+                                      <a href="{{ project.u_production_drawing.url }}" download> Production Drawing </a>
+                                      {% else %}
+                                        <b>Sorry, Nothing Yet!</b>
+                                      {% endif %}
+
+                                  </span>
+                                </div>
+                              </li>
+
+                              <li class="item">
+                                <div>
+                                  Wood Details
+                                  <span class="product-description">
+                                    {% if project.u_frame == True %}
+                                      <b style="color: green;">Yes!, the frames for this project has been made!</b>
+
+                                    {% else %}
+                                      <b style="color: red;">No!, the frames for this project hasn't been made!</b>
+                                    {% endif %}
+                                  </span>
+                                </div>
+                              </li>
+
+                              <li class="item">
+                                <div>
+                                  Upholsters
+                                  <span class="product-description">
+                                    {% if project.carpenter == True %}
+                                      <b style="color: green;">Yes!, this project has reached the carpentry unit.</b>
+
+                                    {% else %}
+                                      <b style="color: red;">No!, this project hasn't reached the carpentry unit.</b>
+                                    {% endif %} |<br />
+
+                                    {% if project.foaming == True %}
+                                      <b style="color: green;">Yes!, this project has reached the foaming unit.</b>
+
+                                    {% else %}
+                                      <b style="color: red;">No!, this project hasn't reached the foaming unit.</b>
+                                    {% endif %} |<br />
+
+                                    {% if project.tailoring == True %}
+                                      <b style="color: green;">Yes!, this project has reached the tailoring unit.</b>
+
+                                    {% else %}
+                                      <b style="color: red;">No!, this project hasn't reached the tailoring unit.</b>
+                                    {% endif %} |<br />
+
+                                    {% if project.tacking == True %}
+                                      <b style="color: green;">Yes!, this project has reached the tacking unit.</b>
+
+                                    {% else %}
+                                      <b style="color: red;">No!, this project hasn't reached the tacking unit.</b>
+                                    {% endif %} |
+
+                                  </span>
+                                </div>
+                              </li>
+
+
+                              <li class="item">
+                                <div>
+                                  Spray Details
+                                  <span class="product-description">
+                                    {% if project.spray == True %}
+                                      <b style="color: green;">Yes!, this project has been sprayed!</b>
+
+                                    {% else %}
+                                      <b style="color: red;">No!, this project hasn't been sprayed!</b>
+                                    {% endif %}
+                                  </span>
+                                </div>
+                              </li>
+
+
+
+
+
+                            {% endif %}
+
+                          {% endif %}
+
+
+                          {% if department.name == "project-service" or department.name == "cleaning" or department.name == "dispatch" or department.name == "installation" %}
+
+                            {% if department.name == "cleaning" or department.name == "project-service" or department.name == "ict" %}
+                            
+
+                            <li class="item">
+                              <div>
+                                Cleaning Details
+                                <span class="product-description">
+                                  {% if project.cleaning == True %}
+                                    <b style="color: green;">Yes!, this project has been cleaned!</b>
+
+                                  {% else %}
+                                    <b style="color: red;">No!, this project hasn't been cleaned!</b>
+                                  {% endif %}
+                                </span>
+                              </div>
+                            </li>
+
+                            {% endif %}
+
+                            {% if department.name == "dispatch" or department.name == "project-service" or department.name == "ict" %}
+
+
+                            <li class="item">
+                              <div>
+                                Dispatch Details
+                                <span class="product-description">
+                                  {% if project.dispatch == True %}
+                                    <b style="color: green;">Yes!, this project has been dispatched!</b>
+
+                                  {% else %}
+                                    <b style="color: red;">No!, this project hasn't been dispatched!</b>
+                                  {% endif %}
+                                </span>
+                              </div>
+                            </li>
+
+                            {% endif %}
+
+
+                            {% if department.name == "installation" or department.name == "project-service" or department.name == "ict" %}
+                            <li class="item">
+                              <div>
+                                Installation Details
+                                <span class="product-description">
+                                  {% if project.installation == True %}
+                                    <b style="color: green;">Yes!, this project has been assembled!</b>
+
+                                  {% else %}
+                                    <b style="color: red;">No!, this project hasn't been assesmbled!</b>
+                                  {% endif %}
+                                </span>
+                              </div>
+                            </li>
+
+                            {% endif %}
+
+
+                          {% endif %}
+
+
+                      </ul>
+                    </div>
+
+
+
+                </div>
+              </div>
+
+
+
+
+              {% if department.name == "design" %}
+
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                  <div class="card card-primary">
+                      <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565);">
+                        <h3 class="card-title">Project Quotation!</h3>
+                      </div>
+
+                        <div class="card-body">   
+                          
+
+                            <b>Click the button below to view and reply the client quotation for this project</b>
+                            <br />
+                            <div class="card-footer">
+                              <small>Submit your reviews and quotation for this client's quotation</small>
+                              <br />
+                              <a href="{% url 'department:quotation_detail' project.quotation.id %}" class="btn btn-primary">View Client Quotation</a>
+                            </div>
+
+
+
+                        </div>
+
+                  </div>
+                </div>
+
+                {% endif %}
+
+
+                {% if department.name == "cutlist" %}
+
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="card card-primary">
+                        <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                          <h3 class="card-title">Submit Optimized Production Drawing for this project.</h3>
+                        </div>
+
+
+
+                        <form method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                          <div class="card-body">   
+
+                            <div class="form-group">
+                              <label for="exampleInputFile">Optimized Production Drawing</label>
+                              <div class="input-group">
+                                <div class="custom-file">
+                                  <input name="optimized_production_drawing" type="file" class="custom-file-input" id="exampleInputFile">
+                                  <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                </div>
+                                <div class="input-group-append">
+                                  <span class="input-group-text">Upload</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-check">
+                              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            </div>
+
+                            </div>
+                          </div>
+                        
+                        <div class="card-footer">
+                          <small>Submit your optimized production drawing for this project</small>
+                          <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary">Send</button>
+                        </div>
+
+                        </form>
+
+                    </div>
+                  </div>
+
+                {% endif %}
+
+
+
+                {% if department.name == "material-estimate" %}
+
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="card card-primary">
+                        <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                          <h3 class="card-title">Submit Material Estimate for this project.</h3>
+                        </div>
+
+
+
+                        <form method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                          <div class="card-body">   
+
+                            <div class="form-group">
+                              <label for="exampleInputFile">Material Estimate</label>
+                              <div class="input-group">
+                                <div class="custom-file">
+                                  <input name="material_estimate" type="file" class="custom-file-input" id="exampleInputFile">
+                                  <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                </div>
+                                <div class="input-group-append">
+                                  <span class="input-group-text">Upload</span>
+                                </div>
+                              </div>
+                            </div>
+
+
+                            </div>
+                          </div>
+                        
+                        <div class="card-footer">
+                          <small>Submit your Material Estimate for this project</small>
+                          <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary">Send</button>
+                        </div>
+
+                        </form>
+
+                    </div>
+                  </div>
+
+                {% endif %}
+
+
+
+                {% if department.name == "cutting" %}
+
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                  <div class="card card-primary">
+                      <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                        <h3 class="card-title">Upload Cutting Details</h3>
+                      </div>
+
+                        <div class="card-body">   
+
+                          <form method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                          <div class="card-body">   
+
+                            <div class="form-check">
+                              <input name="cutting_detail" type="checkbox" class="form-check-input" id="exampleCheck1">
+                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            </div>
+
+                            </div>
+                          </div>
+                        
+                        <div class="card-footer">
+                          <small>Submit Cutting Details for this project</small>
+                          <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+
+                        </form>
+
+
+
+                        </div>
+
+                  </div>
+                </div>
+
+                {% endif %}
+
+
+                {% if department.name == "edge-banding" %}
+
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                  <div class="card card-primary">
+                      <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                        <h3 class="card-title">Upload Edge banding Details</h3>
+                      </div>
+
+                        <div class="card-body">   
+
+                          <form method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                          <div class="card-body">   
+
+                            <div class="form-check">
+                              <input name="edge_banding_detail" type="checkbox" class="form-check-input" id="exampleCheck1">
+                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            </div>
+
+                            </div>
+                          </div>
+                        
+                        <div class="card-footer">
+                          <small>Submit Cutting Details for this project</small>
+                          <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+
+                        </form>
+
+
+
+                        </div>
+
+                  </div>
+                </div>
+
+                {% endif %}
+
+
+
+                {% if department.name == "cnc" %}
+
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                  <div class="card card-primary">
+                      <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                        <h3 class="card-title">Upload CNC Details</h3>
+                      </div>
+
+                        <div class="card-body">   
+
+                          <form method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                          <div class="card-body">   
+
+                            <div class="form-check">
+                              <input name="cnc_detail" type="checkbox" class="form-check-input" id="exampleCheck1">
+                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            </div>
+
+                            </div>
+                          </div>
+                        
+                        <div class="card-footer">
+                          <small>Submit Cutting Details for this project</small>
+                          <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+
+                        </form>
+
+
+
+                        </div>
+
+                  </div>
+                </div>
+
+                {% endif %}
+
+
+                {% if department.name == "assembly" %}
+
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                  <div class="card card-primary">
+                      <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                        <h3 class="card-title">Confirm the Assembling of this Project</h3>
+                      </div>
+
+                        <div class="card-body">
+
+                          <form method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                            <div class="form-check">
+                              <input name="assembly_detail" type="checkbox" class="form-check-input" id="exampleCheck1">
+                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            </div>
+
+                            </div>
+                          </div>
+                        
+                        <div class="card-footer">
+                          <small>click the box above and confirm!</small>
+                          <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary">Confirm</button>
+                        </div>
+
+                        </form>
+
+
+
+                        </div>
+
+
+                {% endif %}
+
+
+
+
+
+                {% if department.name == "upholstery" %}
+
+                
+
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                    <form method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+
+                    <div class="small-box bg-info">
+                      <div class="inner">
+                        <h4><b>Design Unit.</b></h4>
+
+                        <p>Upload Design Quotation for this project.</p>
+                      </div>
+                      <ul class="container">
+                        <li>
+                          <div class="input-group">
+                            <div class="custom-file">
+                              <input name="u_design_quotation" type="file" class="custom-file-input" id="exampleInputFile">
+                              <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                            </div>
+                            <div class="input-group-append">
+                              <span class="input-group-text">Upload</span>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                      <div class="icon">
+                        <i class="ion ion-bag"></i>
+                      </div>
+                      <button type="submit" class="btn btn-primary" style="background: linear-gradient(to right,#6f448b, #ED5565);"> Upload <i class="fas fa-arrow-circle-right"></i></button>
+                    </div>
+
+                  <div class="small-box bg-success">
+                    <div class="inner">
+                      <h4><b>Cutlist Unit.</b></h4>
+
+                      <p>Upload Cutlist details, measurement and drawings.</p>
+                    </div>
+                    <ul class="container">
+                        <li>
+                          <div class="input-group">
+                            <div class="custom-file">
+                              <input name="u_production_drawing" type="file" class="custom-file-input" id="exampleInputFile">
+                              <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                            </div>
+                            <div class="input-group-append">
+                              <span class="input-group-text">Upload</span>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    <div class="icon">
+                      <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="background: linear-gradient(to right,#6f448b, #ED5565);"> Upload <i class="fas fa-arrow-circle-right"></i></button>
+                  </div>
+
+                  <div class="small-box bg-warning">
+                    <div class="inner">
+                      <h4><b>Wood Unit.</b></h4>
+
+                      <p>Confirm the Frame Production of this project.</p>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="form-check">
+                           <input name="u_frame" type="checkbox" class="form-check-input" id="exampleCheck1">
+                           <label class="form-check-label" for="exampleCheck1">Framing</label>
+                        </div>
+                      </li>
+                    </ul>
+                    <div class="icon">
+                      <i class="ion ion-person-add"></i>
+                    </div>
+                    <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary"> Confirm <i class="fas fa-arrow-circle-right"></i></button>
+                  </div>
+
+
+                  <div class="small-box bg-danger">
+                    <div class="inner">
+                      <h4><b>Upholsters</b></h4>
+
+                      <p>Upholstery Section</p>
+                      <ul>
+                        <li>
+                          <div class="form-check">
+                             <input name="carpenter" type="checkbox" class="form-check-input" id="exampleCheck1">
+                             <label class="form-check-label" for="exampleCheck1">Carpenter</label>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="form-check">
+                             <input name="foaming" type="checkbox" class="form-check-input" id="exampleCheck1">
+                             <label class="form-check-label" for="exampleCheck1">Foaming</label>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="form-check">
+                             <input name="tailoring" type="checkbox" class="form-check-input" id="exampleCheck1">
+                             <label class="form-check-label" for="exampleCheck1">Tailoring</label>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="form-check">
+                             <input name="tacking" type="checkbox" class="form-check-input" id="exampleCheck1">
+                             <label class="form-check-label" for="exampleCheck1">Tacking</label>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-pie-graph"></i>
+                    </div>
+                    <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary"> Confirm <i class="fas fa-arrow-circle-right"></i></button>
+                  </div>
+
+                  <div class="small-box bg-success">
+                    <div class="inner">
+                      <h4><b>Spraying Unit.</b></h4>
+
+                      <p>Upholstery Section</p>
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="form-check">
+                         <input name="spraying" type="checkbox" class="form-check-input" id="exampleCheck1">
+                         <label class="form-check-label" for="exampleCheck1">Spraying</label>
+                      </div>
+                      </li>
+                    </ul>
+                    
+                    <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary"> Confirm <i class="fas fa-arrow-circle-right"></i></buttton>
+                  </div>
+
+                  </form>
+
+                </div>
+
+              
+
+
+                {% endif %}
+
+
+                {% if department.name == "cleaning" %}
+
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                  <div class="card card-primary">
+                      <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                        <h3 class="card-title">Confirm the Cleaning of this Project</h3>
+                      </div>
+
+                        <div class="card-body">
+
+                          <form method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                            <div class="form-check">
+                              <input name="cleaning" type="checkbox" class="form-check-input" id="exampleCheck1">
+                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            </div>
+
+                            </div>
+                          </div>
+                        
+                        <div class="card-footer">
+                          <small>click the box above and confirm!</small>
+                          <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary">Confirm</button>
+                        </div>
+
+                        </form>
+
+
+
+                        </div>
+
+                  </div>
+                </div>
+
+                {% endif %}
+
+
+                {% if department.name == "dispatch" %}
+
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                  <div class="card card-primary">
+                      <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                        <h3 class="card-title">Confirm the Dispatch of this Project</h3>
+                      </div>
+
+                        <div class="card-body">
+
+                          <form method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                            <div class="form-check">
+                              <input name="dispatch" type="checkbox" class="form-check-input" id="exampleCheck1">
+                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            </div>
+
+                            </div>
+                          </div>
+                        
+                        <div class="card-footer">
+                          <small>click the box above and confirm!</small>
+                          <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary">Confirm</button>
+                        </div>
+
+                        </form>
+
+
+
+                        </div>
+
+                  </div>
+                </div>
+
+                {% endif %}
+
+
+                {% if department.name == "installation" %}
+
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                  <div class="card card-primary">
+                      <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                        <h3 class="card-title">Confirm the Installation of this Project</h3>
+                      </div>
+
+                        <div class="card-body">
+
+                          <form method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                            <div class="form-check">
+                              <input name="installation" type="checkbox" class="form-check-input" id="exampleCheck1">
+                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            </div>
+
+                            </div>
+                          </div>
+                        
+                        <div class="card-footer">
+                          <small>click the box above and confirm!</small>
+                          <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary">Confirm</button>
+                        </div>
+
+                        </form>
+
+
+
+                        </div>
+
+                  </div>
+                </div>
+
+                {% endif %}
+
+
+                {% if department.name == "spray" %}
+
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                  <div class="card card-primary">
+                      <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                        <h3 class="card-title">Confirm the Spraying of this Project</h3>
+                      </div>
+
+                        <div class="card-body">
+
+                          <form method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                            <div class="form-check">
+                              <input name="spray" type="checkbox" class="form-check-input" id="exampleCheck1">
+                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            </div>
+
+                            </div>
+                          </div>
+                        
+                        <div class="card-footer">
+                          <small>click the box above and confirm!</small>
+                          <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary">Confirm</button>
+                        </div>
+
+                        </form>
+
+
+
+                        </div>
+
+                  </div>
+                </div>
+
+                {% endif %}
+
+
+
+                {% if department.name == "frame" %}
+
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                  <div class="card card-primary">
+                      <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                        <h3 class="card-title">Confirm Assembling of this Project</h3>
+                      </div>
+
+                        <div class="card-body">
+
+                          <form method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                            <div class="form-check">
+                              <input name="frame" type="checkbox" class="form-check-input" id="exampleCheck1">
+                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            </div>
+
+                            </div>
+                          </div>
+                        
+                        <div class="card-footer">
+                          <small>click the box above and confirm!</small>
+                          <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary">Confirm</button>
+                        </div>
+
+                        </form>
+
+
+
+                        </div>
+
+                  </div>
+                </div>
+
+                {% endif %}
+
+
+
+
+                {% if department.name == "ict" %}
+
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                  <div class="card card-primary">
+                      <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                        <h3 class="card-title">Confirm this Project reached the ICT unit</h3>
+                      </div>
+
+                        <div class="card-body">
+
+                          <form method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                            <div class="form-check">
+                              <input name="ict" type="checkbox" class="form-check-input" id="exampleCheck1">
+                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            </div>
+
+                            </div>
+                          </div>
+                        
+                        <div class="card-footer">
+                          <small>click the box above and confirm!</small>
+                          <button type="submit" class="btn btn-primary">Confirm</button>
+                        </div>
+
+                        </form>
+
+
+
+                        </div>
+
+                  </div>
+                </div>
+
+                {% endif %}
+
+
+
+                
+
+
+
+
+
+
+            </div>
+
+
+      </div>
+      <!-- /.card -->
+
+
+        
+
+    </section>
+    <!-- /.content -->
+
+
+
+
+{% endblock %}
+

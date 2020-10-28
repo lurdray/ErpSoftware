@@ -1,0 +1,144 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<style type="text/css">
+  .btn-primary{
+    background: linear-gradient(to right,#6f448b, #ED5565);
+    transition
+  }
+  .btn-primary:hover{
+    background: linear-gradient(to right,#34495e, #6f448b);
+    transition: opacity 1s linear;
+  }
+</style>
+
+ <body class="hold-transition container" style="background: linear-gradient(to right,#6f448b, #ED5565);">
+<div class="register-boxs">
+  <div class="register-logo">
+    <a style="font-size: 20px; color: #fff" href="#"><b>ERP | </b>Interior Woodwork Limited</a>
+  </div>
+
+
+<!-- Main content -->
+    <section class="contents">
+
+      <!-- Default box -->
+      <div class="card card-primary card-outline">
+        <div class="card-header">
+          <h5 class="m-0">Personal Details First</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <div class="card card-primary">
+                  <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565);">
+                    <h3 class="card-title">Complete the simple form</h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <!-- form start -->
+                  <form method="post">
+                    {% csrf_token %}
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-sm-6 col-xs-6">
+                          <!-- checkbox -->
+                            <div class="form-group">
+                              <label>Boards:</label>
+                              <small>(What level of boards should be used for this project ?)</small>
+                              <select required="required" name="board_type" class="custom-select">
+                                <option value="standard">Standard</option>
+                                <option value="premium">Premium</option>
+                              </select>
+                            </div>
+
+                            <div class="form-group">
+                              <label>Accessories:</label>
+                              <small>(What kind of accessories do you prefer for this project ?)</small>
+                              <select required="required" name="accessories" class="custom-select">
+                                <option value="standard">Standard</option>
+                                <option value="premium">Premium</option>
+                              </select>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6 col-xs-6">
+                          <!-- radio -->
+                          <div class="form-group">
+                            <label for="exampleInputEmail1">Cabinets:</label>
+                            <small>(Check your prefered cabinet type, you can select both!)</small>
+                            <div class="form-check">
+                              <input name="upper" class="form-check-input" type="checkbox">
+                              <label class="form-check-label">Upper</label>
+                            </div>
+                            <div class="form-check">
+                              <input name="lower" class="form-check-input" type="checkbox">
+                              <label class="form-check-label">Lower</label>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label for="exampleInputEmail1">Office:</label>
+                            <small>(Type of Drawals)</small>
+                            <div class="form-check">
+                              <input name="pedestral_drawal" class="form-check-input" type="checkbox">
+                              <label class="form-check-label">Pedestral Drawals</label>
+                            </div>
+                            <div class="form-check">
+                              <input name="side_drawal" class="form-check-input" type="checkbox">
+                              <label class="form-check-label">Side Drawal</label>
+                            </div>
+                            <div class="form-check">
+                              <input name="open_shelf" class="form-check-input" type="checkbox">
+                              <label class="form-check-label">Open Shelf</label>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                     
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Sofa:</label>
+                        <small>(Number of Seats)</small>
+                        <input required="required" name="sofa_seats" type="number" value="4" class="form-control" id="exampleInputEmail1" placeholder="Enter Full Name">
+                      </div>
+
+                      <div class="form-group">
+                         <label>Bed:</label>
+                         <small>(Select your prefered type of bed)</small>
+                         <select required="required" name="bed_type" class="custom-select">
+                           <option value="bunk">Bunk</option>
+                           <option value="flat">Flat</option>
+                           <option value="standard">Standard</option>
+                           <option value="premium">Premium</option>
+                         </select>
+                      </div>
+
+
+
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                      <button type="submit" class="btn btn-primary">Complete</button>
+                    </div>
+                  </form>
+                </div>
+                <!-- /.card -->
+              </div>
+            </div>
+        </div>
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+
+
+ </div>
+</body>
+
+
+{% endblock %}

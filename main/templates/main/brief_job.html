@@ -1,0 +1,135 @@
+ {% extends 'main/base.html' %}
+{% load static %}
+
+
+{% block content %} 
+
+<style type="text/css">
+  .btn-primary{
+    background: linear-gradient(to right,#6f448b, #ED5565);
+    transition
+  }
+  .btn-primary:hover{
+    background: linear-gradient(to right,#34495e, #6f448b);
+    transition: opacity 1s linear;
+  }
+</style>
+
+ <body class="hold-transition container" style="background: linear-gradient(to right,#6f448b, #ED5565);">
+<div class="register-boxs">
+  <div class="register-logo">
+    <a style="font-size: 20px; color: #fff;" href="#"><b>ERP | </b>Interior Woodwork Limited</a>
+  </div>
+
+
+<!-- Main content -->
+    <section class="contents">
+
+      <!-- Default box -->
+      <div class="card card-primary card-outline">
+        <div class="card-header">
+          <h5 class="m-0">Job Details</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <div class="card card-primary">
+                  <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565);">
+                    <h3 class="card-title">Complete the simple form</h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <!-- form start -->
+                  <form method="post">
+                    {% csrf_token %}
+                    <div class="card-body">   
+                      <div class="form-group">
+                        <label>Job Description</label>
+                        <textarea required="required" name="description" class="form-control" rows="8" placeholder="Enter Job Description"></textarea>
+                      </div>    
+                      <div class="form-group">
+                        <div class="form-group">
+                          <label>Mode of Payment</label>
+                          <select required="required" name="payment_mode" class="custom-select">
+                            <option value="pos">P.O.S</option>
+                            <option value="cash">Cash</option>
+                            <option value="transfer">Transfer</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="form-group">
+                          <label>Meduim of Awareness</label>
+                          <select required="required" name="awareness" class="custom-select">
+                            <option value="social">Social Media</option>
+                            <option value="website">Website</option>
+                            <option value="referral">Referral</option>
+                            <option value="none">None</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label>Price Range:</label>
+                        <small>(Enter the price range you are looking at:)</small>
+                        <div class="row">
+                          <div class="col-1">
+                            <labe>₦</label>
+                          </div>
+                          <div class="col-4">
+                            <input required="required" name="min_price" type="number" class="form-control" placeholder="Min Price">
+                          </div>
+                          <div class="col-2">
+                            <labe></label>
+                          </div>
+                          <div class="col-1">
+                            <labe>₦</label>
+                          </div>
+                          <div class="col-4">
+                            <input required="required" name="max_price" type="number" class="form-control" placeholder="Max Price">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label>Date range:</label>
+                        <small>(Set a time-range for this job.)</small>
+
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="far fa-calendar-alt"></i>
+                            </span>
+                          </div>
+                          <input required="required" name="time_range" type="text" class="form-control float-right" id="reservation">
+                        </div>
+                        <!-- /.input group -->
+                      </div>
+
+                      <div class="form-group">
+                        <label>Term:</label><small>(Kindly provide your terms and condition for this project, if any!)</small>
+                        <textarea required="" name="terms" class="form-control" rows="3" placeholder="Enter Job Terms and Condition"></textarea>
+                      </div>
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                      <button type="submit" class="btn btn-primary">Next</button>
+                    </div>
+                  </form>
+                </div>
+                <!-- /.card -->
+              </div>
+            </div>
+        </div>
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+
+
+ </div>
+</body>
+
+
+{% endblock %}

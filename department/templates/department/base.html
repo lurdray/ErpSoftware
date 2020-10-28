@@ -1,0 +1,429 @@
+{% load static %}
+<style type="text/css">
+  .badge{
+  background: linear-gradient(to right,#6f448b, #ED5565);
+  }
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ERP | Interior Woodwork Limited</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'main/plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="{% static 'main/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="{% static 'main/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="{% static 'main/plugins/jqvmap/jqvmap.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'main/dist/css/adminlte.min.css' %}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'main/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="{% static 'main/plugins/daterangepicker/daterangepicker.css' %}">
+  <!-- summernote -->
+  <link rel="stylesheet" href="{% static 'main/plugins/summernote/summernote-bs4.min.css' %}">
+
+  <link rel="stylesheet" href="{% static 'main/plugins/daterangepicker/daterangepicker.css' %}">
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed" style="">
+<div class="wrapper">
+
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="index3.html" class="nav-link">Home</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="#" class="nav-link">View Projects</a>
+      </li>
+    </ul>
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <!-- Messages Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="far fa-comments"></i>
+          <span class="badge badge-danger navbar-badge">3</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <a href="#" class="dropdown-item">
+            <!-- Message Start -->
+            <div class="media">
+              <div class="media-body">
+                <h3 class="dropdown-item-title">
+                  Brad Diesel
+                  <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                </h3>
+                <p class="text-sm">Call me whenever you can...</p>
+                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+              </div>
+            </div>
+            <!-- Message End -->
+          </a>
+          <div class="dropdown-divider"></div>
+
+
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+          <i class="fas fa-th-large"></i> 
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="#" class="brand-link">
+      {{ user }}
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{% static 'main/images/iwl_logo.png' %}" class="img-circle elevation-2" alt="iwl logo">
+        </div>
+        <div class="info">
+          
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+
+          <li class="nav-item">
+            <a href="pages/widgets.html" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Home
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="pages/widgets.html" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                How it Works
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="pages/widgets.html" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Profile
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="pages/widgets.html" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Settings
+              </p>
+            </a>
+          </li>
+
+
+          <li class="nav-header">Project</li>
+
+          {% if department.name == "customer-service" %}
+
+          <li class="nav-item">
+            <a href="{% url 'main:brief_psn' %}" class="nav-link">
+              <i class="nav-icon far fa-calendar-alt"></i>
+              <p>
+                Prepare Customer Brief
+
+              </p>
+            </a>
+          </li>
+
+            <li class="nav-item">
+              <a href="{% url 'department:client_brief' %}" class="nav-link">
+                <i class="nav-icon far fa-calendar-alt"></i>
+                <p>
+                  Client Briefs
+                </p>
+              </a>
+            </li>
+
+
+          {% endif %}
+
+          {% if department.name == "cutlist" or department.name == "material-estimate" or department.name == "cutting" or department.name == "edge-banding" or department.name == "cnc" or department.name == "assembly" or department.name == "cleaning" or department.name == "dispatch" or department.name == "installation" or department.name == "upholstery" or department.name == "ict" %}
+
+          <li class="nav-item">
+              <a href="{% url 'project:all_project' %}" class="nav-link">
+                <i class="nav-icon far fa-calendar-alt"></i>
+                <p>
+                  Projects
+                </p>
+              </a>
+            </li>
+
+          {% endif %}
+
+
+          {% if department.name == "design" %}
+
+
+            <li class="nav-item">
+              <a href="{% url 'department:client_brief' %}" class="nav-link">
+                <i class="nav-icon far fa-calendar-alt"></i>
+                <p>
+                  Client Brief
+                </p>
+              </a>
+            </li>
+
+
+
+          {% endif %}
+
+
+          {% if department.name == "project-service" %}
+          
+
+            <li class="nav-item">
+              <a href="{% url 'department:client_brief' %}" class="nav-link">
+                <i class="nav-icon far fa-calendar-alt"></i>
+                <p>
+                  Client Brief
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="{% url 'project:all_project' %}" class="nav-link">
+                <i class="nav-icon far fa-calendar-alt"></i>
+                <p>
+                  Projects
+                </p>
+              </a>
+            </li>
+
+
+
+          {% endif %}
+
+
+          <li class="nav-item">
+            <a href="pages/calendar.html" class="nav-link">
+              <i class="nav-icon far fa-calendar-alt"></i>
+              <p>
+                How it Works
+
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="pages/calendar.html" class="nav-link">
+              <i class="nav-icon far fa-calendar-alt"></i>
+              <p>
+                View All
+                <span class="badge badge-info right">3</span>
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-header">Tools</li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fas fa-circle nav-icon"></i>
+              <p>Tool 1</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fas fa-circle nav-icon"></i>
+              <p>Tool 2</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fas fa-circle nav-icon"></i>
+              <p>Tool 3</p>
+            </a>
+          </li>
+
+
+
+
+          <li class="nav-item">
+            <a href="{% url 'main:user_logout' %}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Logout
+              </p>
+            </a>
+          </li>
+
+
+        </ul>
+      </nav>
+
+      <!-- /.sidebar-menu -->
+    </div>
+
+    <!-- /.sidebar -->
+  </aside>
+
+{% if messages %}
+    <ul class="messages text-center" style="background-color: #6f448b; color: #fff;>
+    	{% for message in messages %}
+    	<li "{% if message.tags %} class="{{ messages.tags}}" {% endif %} style="margin: 50px">{{message}} </li>
+    	{% endfor %}
+    </ul>
+    {% endif %}
+
+
+    <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper" style="background: linear-gradient(to right,#6f448b, #ED5565);"> 
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h3 style = "text-transform:uppercase; color: #fff">{{ page_title }}</h3>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active" style="color: #fff">{{ page_title }}</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+{% block content %}
+
+{% endblock %}
+
+  </div>
+  <!-- /.content-wrapper -->
+
+
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 2020 <a href="https://adminlte.io">www.iwlimited.com</a>.</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 1.00a
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="{% static 'main/plugins/jquery/jquery.min.js' %}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{% static 'main/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script src="https://kit.fontawesome.com/5bc9974d75.js" crossorigin="anonymous"></script>
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'main/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- ChartJS -->
+<script src="{% static 'main/plugins/chart.js/Chart.min.js' %}"></script>
+<!-- Sparkline -->
+<script src="{% static 'main/plugins/sparklines/sparkline.js' %}"></script>
+<!-- JQVMap -->
+<script src="{% static 'main/plugins/jqvmap/jquery.vmap.min.js' %}"></script>
+<script src="{% static 'main/plugins/jqvmap/maps/jquery.vmap.usa.js' %}"></script>
+<!-- jQuery Knob Chart -->
+<script src="{% static 'main/plugins/jquery-knob/jquery.knob.min.js' %}"></script>
+<!-- daterangepicker -->
+<script src="{% static 'main/plugins/moment/moment.min.js' %}"></script>
+<script src="{% static 'main/plugins/daterangepicker/daterangepicker.js' %}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{% static 'main/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<!-- Summernote -->
+<script src="{% static 'main/plugins/summernote/summernote-bs4.min.js' %}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static 'main/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'main/dist/js/adminlte.js' %}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{% static 'main/dist/js/pages/dashboard.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'main/dist/js/demo.js' %}"></script>
+
+<script src="{% static 'main/plugins/daterangepicker/daterangepicker.js' %}"></script>
+
+<script>
+  // Set the date we're counting down to
+  var countDownDate = new Date("{{ project.delivery_date }}").getTime();
+
+  // Update the count down every 1 second
+  var x = setInterval(function() {
+
+    // Get today's date and time
+    var now = new Date().getTime();
+
+
+    // Find the distance between now and the count down date
+    var distance = countDownDate - now;
+    //var distance = "{{ counter }}";
+
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("ray_counter").innerHTML = days + "d " + hours + "h "
+    + minutes + "m " + seconds + "s ";
+
+    // If the count down is finished, write some text
+    if (distance < 0) {
+      clearInterval(x);
+      document.getElementById("ray_counter").innerHTML = "EXPIRED";
+    }
+  }, 1000);
+</script>
+
+
+</body>
+</html>

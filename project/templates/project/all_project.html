@@ -1,0 +1,107 @@
+  {% extends 'department/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<style type="text/css">
+  .progress-bar{
+    background: linear-gradient(to right,#6f448b, #ED5565);
+    
+  }
+  
+</style>
+          
+
+           <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card card-primary card-outline">
+        <div class="card-header">
+          <h5 class="m-0">Projects</h5>
+        </div>
+        <div class="card-body">
+
+          
+          <div class="card">
+              <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                <h3 class="card-title">All Projects in one place!</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th style="width: 100px">Titles</th>
+                      <th>Clients</th>
+                      <th>Progresses</th>
+                      <th style="width: 100px">Deadlines</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% if projects %}
+                      {% for item in projects %}
+                        <tr>
+                          <td>
+                            <a href="{% url 'project:project_detail' item.id %}">
+                            {{ item.title }}
+                          </a>
+                          </td>
+                          <td>
+                            <a href="{% url 'project:project_detail' item.id %}">
+                              {{ item.brief.client }}
+                            </a>
+                          </td>
+                          <td>
+                            <div class="progress progress-xs">
+                              <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+                            </div>
+                            <b>{{ item.status }}</b>
+                          </td>
+                          <td><span class="badge bg-danger">{{ item.delivery_date }}</span></td>
+                        </tr>
+
+                      {% endfor %}
+
+                    {% else %}
+                      <tr>
+                        <td></td>
+                        <td>Sorry, Nothing Yet!</td>
+                        <td>
+                          Sorry, Nothing Yet!
+                        </td>
+                        <td>Sorry, Nothing Yet!</td>
+                      </tr>
+
+                    {% endif %}
+
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer clearfix">
+                <ul class="pagination pagination-sm m-0 float-right">
+                  <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                </ul>
+              </div>
+            </div>
+            <!-- /.card -->
+
+
+        </div>
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+
+
+
+            
+          
+
+{% endblock %}

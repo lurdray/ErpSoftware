@@ -1,0 +1,408 @@
+ {% extends 'department/base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+
+
+
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card card-primary card-outline">
+        <div class="card-header">
+          <h5 class="m-0">Client Quotation Details</h5>
+        </div>
+
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-8 col-md-8 col-sm-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                      <h3 class="card-title">{{ quotation.client }}'s Quotation</h3>
+                    </div>
+
+                    <div class="card-body p-0">
+                      <ul class="products-list product-list-in-card pl-2 pr-2">
+
+
+                        <li class="item">
+                          <div>
+                            Personal Details
+                            <span class="product-description">
+                              {{ quotation.client }} | {{ quotation.client.phone }} | {{ quotation.client.address }}
+                            </span>
+                          </div>
+                        </li>
+
+                        <li class="item">
+                          <div>
+                            Job Description
+                            <span class="product-description">
+                              {{ quotation.description }}
+                            </span>
+                          </div>
+                        </li>
+
+                        <li class="item">
+                          <div>
+                            Payment Method
+                            <span class="product-description">
+                              {{ quotation.payment_mode }}
+                            </span>
+                          </div>
+                        </li>
+
+                        <li class="item">
+                          <div>
+                            Awareness
+                            <span class="product-description">
+                              {{ quotation.awareness }}
+                            </span>
+                          </div>
+                        </li>
+
+
+                        <li class="item">
+                          <div>
+                            Price Range
+                            <span class="product-description">
+                              {{ quotation.min_price }} - {{ quotation.max_price }}
+                            </span>
+                          </div>
+                        </li>
+
+                        <li class="item">
+                          <div>
+                            Time Range
+                            <span class="product-description">
+                              {{ quotation.time_range }}
+                            </span>
+                          </div>
+                        </li>
+
+                        <li class="item">
+                          <div>
+                            Terms and Condition
+                            <span class="product-description">
+                              {{ quotation.terms }}
+                            </span>
+                          </div>
+                        </li>
+
+                        <li class="item">
+                          <div>
+                            Prefered Board & Accessories
+                            <span class="product-description">
+                              <b>Boards: </b>({{ quotation.board }}) | <b>Accessories: </b>({{ quotation.accessories }})
+                            </span>
+                          </div>
+                        </li>
+
+
+                        <li class="item">
+                          <div>
+                            Cabinets
+                            <span class="product-description">
+                              {{ quotation.cabinet_type }}
+                            </span>
+                          </div>
+                        </li>
+
+
+                        <li class="item">
+                          <div>
+                            Type Drawal
+                            <span class="product-description">
+                              {{ quotation.drawal_type }}
+                            </span>
+                          </div>
+                        </li>
+
+
+                        <li class="item">
+                          <div>
+                            Number of Seats(SOFA)
+                            <span class="product-description">
+                              {{ quotation.sofa_seats }}
+                            </span>
+                          </div>
+                        </li>
+
+
+                        <li class="item">
+                          <div>
+                            Type of Bed
+                            <span class="product-description">
+                              {{ quotation.bed_type }}
+                            </span>
+                          </div>
+                        </li>
+
+
+
+
+
+
+
+
+
+                      </ul>
+                    </div>
+
+
+
+                </div>
+              </div>
+
+
+              {% if department.name == "project-service" %}
+
+                {% if project.status == none %}
+
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                          <h3 class="card-title">Forward for Production</h3>
+                        </div>
+
+
+
+                        <form method="post">
+                          {% csrf_token %}
+                          <div class="card-body">   
+                            
+
+                              <div class="form-group">
+                                <label for="exampleInputEmail1">Project Title</label>
+                                <input name="title" type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter Project Title">
+                              </div>
+
+                              <div class="form-group">
+                                <label for="exampleInputEmail1">Project ID/Code</label>
+                                <input name="project_id" type="text" class="form-control" id="exampleInputEmail1" value="{{ project_id }}">
+                              </div>
+
+
+                              <div class="form-group">
+                                <label>Project Type</label>
+                                <small>(Select if this project is upholstery or not)</small>
+                                <select name="project_type" class="custom-select">
+                                  <option value="upholstery">Upholster</option>
+                                  <option value="not_upholstery">Not Upholster</option>
+                                </select>
+                              </div>
+
+
+
+                              <div class="form-group">
+                              <label>Delivery Date</label>
+                              <small>(Give a delivery date for this project.)</small>
+
+                              <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">
+                                    <i class="far fa-calendar-alt"></i>
+                                  </span>
+                                </div>
+                                <input name="delivery_date" type="text" class="form-control float-right" id="reservation">
+                              </div>
+                              <!-- /.input group -->
+                            </div>
+                          </div>
+                        
+                        <div class="card-footer">
+                          <small>Convert this quotation into a project!</small>
+                          <button type="submit" class="btn btn-primary">Convert</button>
+                        </div>
+
+                        </form>
+
+                    </div>
+                  </div>
+
+                  {% else %}
+
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                          <h3 class="card-title">Production Progress</h3>
+                        </div>
+
+                          <div class="card-body">   
+                            
+
+                              <b>This Quotation has sent for production!</b>
+
+                              <br />
+                              <br />
+                              <small>Production Progress.</small>
+                              <div class="progress progress-xs">
+                                <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+                              </div>
+                              <b>{{ item.status }}</b>
+                              <br />
+                              <br />
+                              
+                              <div class="card-footer">
+                                <small>See Full Project Details</small>
+                                <a href="{% url 'project:project_detail' project_detail_id %}" class="btn btn-primary">View!</a>
+                              </div>
+
+
+                          </div>
+
+                    </div>
+                  </div>
+
+
+                {% endif %}
+
+
+
+              {% elif department.name == "design" %}
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                          <h3 class="card-title">Submit a design quotation for this project.</h3>
+                        </div>
+
+
+
+                        <form method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                          <div class="card-body">   
+
+                            <div class="form-group">
+                              <label for="exampleInputFile">Design Quotation</label>
+                              <div class="input-group">
+                                <div class="custom-file">
+                                  <input name="design_quotation" type="file" class="custom-file-input" id="exampleInputFile">
+                                  <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                </div>
+                                <div class="input-group-append">
+                                  <span class="input-group-text">Upload</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="exampleInputFile">Presentation Drawing</label>
+                              <div class="input-group">
+                                <div class="custom-file">
+                                  <input name="presentation_drawing" type="file" class="custom-file-input" id="exampleInputFile">
+                                  <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                </div>
+                                <div class="input-group-append">
+                                  <span class="input-group-text">Upload</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="exampleInputFile">Production Drawing</label>
+                              <div class="input-group">
+                                <div class="custom-file">
+                                  <input name="production_drawing" type="file" class="custom-file-input" id="exampleInputFile">
+                                  <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                </div>
+                                <div class="input-group-append">
+                                  <span class="input-group-text">Upload</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-check">
+                              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            </div>
+
+                            </div>
+                          </div>
+                        
+                        <div class="card-footer">
+                          <small>Submit your reviews and quotation for this client's quotation</small>
+                          <button type="submit" class="btn btn-primary">Send</button>
+                        </div>
+
+                        </form>
+
+                    </div>
+                  </div>
+
+
+              {% elif department.name == "cutlist" %}
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                          <h3 class="card-title">Submit a design quotation for this project.</h3>
+                        </div>
+
+
+
+                        <form method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                          <div class="card-body">   
+
+                            <div class="form-group">
+                              <label for="exampleInputFile">Optimized Production Drawing</label>
+                              <div class="input-group">
+                                <div class="custom-file">
+                                  <input name="optimized_production_drawing" type="file" class="custom-file-input" id="exampleInputFile">
+                                  <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                </div>
+                                <div class="input-group-append">
+                                  <span class="input-group-text">Upload</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-check">
+                              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            </div>
+
+                            </div>
+                          </div>
+                        
+                        <div class="card-footer">
+                          <small>Submit your optimized production drawing for this client's quotation</small>
+                          <button type="submit" class="btn btn-primary">Send</button>
+                        </div>
+
+                        </form>
+
+                    </div>
+                  </div>
+
+
+
+                {% else %}
+                  <p>Nothing here!</p>
+
+
+              {% endif %}
+
+
+
+
+
+
+
+
+
+            </div>
+
+
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+
+
+
+
+{% endblock %}
+
+
+

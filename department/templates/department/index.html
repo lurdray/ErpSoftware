@@ -1,0 +1,43 @@
+ {% extends 'department/base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<style type="text/css">
+  .btn-primary{
+    background: linear-gradient(to right,#6f448b, #ED5565);
+    transition
+  }
+  .btn-primary:hover{
+    background: linear-gradient(to right,#34495e, #6f448b);
+    transition: opacity 1s linear;
+  }
+</style>
+
+
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card card-primary card-outline">
+        <div class="card-header">
+          <h5 class="m-0">Featured</h5>
+        </div>
+        <div class="card-body">
+          <h6 class="card-title">Special title treatment</h6>
+
+          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+
+
+
+
+{% endblock %}
