@@ -113,8 +113,8 @@ def BriefDetailView(request, brief_id):
 			return render(request, "department/brief_detail.html", context)
 
 		except:
-			counter = RayBringSec(department.time_rate, project.t_seconds)
-			context = {"department": department, "page_title": page_title, "project_id": project_id, "brief": brief, "counter": counter}
+			#counter = RayBringSec(department.time_rate, project.t_seconds)
+			context = {"department": department, "page_title": page_title, "project_id": project_id, "brief": brief}
 			return render(request, "department/brief_detail.html", context)
 
 
