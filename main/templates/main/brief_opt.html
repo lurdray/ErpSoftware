@@ -84,11 +84,11 @@
                             <small>(Type of Drawals)</small>
                             <div class="form-check">
                               <input name="pedestral_drawal" class="form-check-input" type="checkbox">
-                              <label class="form-check-label">Pedestral Drawals</label>
+                              <label class="form-check-label">Pedestral Drawers</label>
                             </div>
                             <div class="form-check">
                               <input name="side_drawal" class="form-check-input" type="checkbox">
-                              <label class="form-check-label">Side Drawal</label>
+                              <label class="form-check-label">Side Drawers</label>
                             </div>
                             <div class="form-check">
                               <input name="open_shelf" class="form-check-input" type="checkbox">
@@ -103,17 +103,20 @@
                         <label for="exampleInputEmail1">Sofa:</label>
                         <small>(Number of Seats)</small>
                         <input required="required" name="sofa_seats" type="number" value="4" class="form-control" id="exampleInputEmail1" placeholder="Enter Full Name">
+                        <small>(Input '0' if you're not interested in any sofa.)</small>
                       </div>
 
                       <div class="form-group">
                          <label>Bed:</label>
                          <small>(Select your prefered type of bed)</small>
                          <select required="required" name="bed_type" class="custom-select">
+                          <option value="none">None</option>
                            <option value="bunk">Bunk</option>
                            <option value="flat">Flat</option>
                            <option value="standard">Standard</option>
                            <option value="premium">Premium</option>
                          </select>
+                         <small>(Select "None" you're not interested in any bed.)</small>
                       </div>
 
 

@@ -9,6 +9,7 @@ from django.urls import reverse, reverse_lazy
 import random
 import string
 import datetime
+from datetime import date, timedelta
 
 # Create your views here.
 
@@ -19,9 +20,17 @@ def RayBringSec(time_rate, t_seconds):
 	return result
 
 
+	#timezone.now()[0:19]
 def RayDateToSec(k_date):
+	today_date = date.today().strftime("%Y-%m-%d-%H:%M:%S")
+	result = k_date - today_date
+	return HttpResponse(k_date.days)
+
+
 	intial = datetime.datetime.utcfromtimestamp(0)
-	result = k_date - intial
+	result = k_date - datetime.datetime.strptime(str(timezone.now()), "%y %m %d %H %M %S")
+	return HttpResponse(result)
+	return HttpResponse(timezone.now()[0:19])
 	return result.total_seconds() / 1000
 
 
@@ -185,6 +194,15 @@ def BriefJobView(request, client_id):
 
 		brief = Brief.objects.create(client=client, description=description, payment_mode=payment_mode, awareness=awareness, min_price=min_price, max_price=max_price, time_range=time_range, terms=terms)
 		brief.save()
+
+		project_image = request.FILES["project_image"]
+		info = "Please refer to this Image."
+		uploader = "client"
+		pi = PImage.objects.create(info=info, image=project_image, uploader=uploader)
+		pi.save()
+
+		bpi = BriefPImageConnector.objects.create(brief=brief, image=pi)
+		bpi.save()
 
 		return HttpResponseRedirect(reverse("main:brief_opt", args=(brief.id,)))
 

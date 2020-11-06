@@ -22,14 +22,345 @@
 
       <!-- Default box -->
       <div class="card card-primary card-outline">
-        <div class="card-header">
-          <h5 class="m-0">Featured</h5>
+        <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+          <h5 class="m-0">Overview</h5>
         </div>
         <div class="card-body">
-          <h6 class="card-title">Special title treatment</h6>
 
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+
+        {% if department.name == "project-service" %}
+
+              <div class="row">
+                <div class="col-12 col-sm-6 col-md-3">
+                  <div class="info-box" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                    <span class="info-box-icon bg-info elevation-1" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff"><i class="fas fa-users"></i></span>
+
+                    <div class="info-box-content">
+                      <span class="info-box-text">Clients</span>
+                      <span class="info-box-number">
+                        {{ client_count }}
+                        <small></small>
+                      </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-12 col-sm-6 col-md-3">
+                  <div class="info-box mb-3" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                    <span class="info-box-icon bg-danger elevation-1" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff"><i class="fas fa-book"></i></span>
+
+                    <div class="info-box-content">
+                      <span class="info-box-text">Briefs</span>
+                      <span class="info-box-number">{{ brief_count }}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+
+                <!-- fix for small devices only -->
+                <div class="clearfix hidden-md-up"></div>
+
+                <div class="col-12 col-sm-6 col-md-3">
+                  <div class="info-box mb-3" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                    <span class="info-box-icon bg-success elevation-1" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff"><i class="fas fa-cogs"></i></span>
+
+                    <div class="info-box-content">
+                      <span class="info-box-text">Projects</span>
+                      <span class="info-box-number">{{ project_count }}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+
+                <div class="col-12 col-sm-6 col-md-3">
+                  <div class="info-box mb-3" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                    <span class="info-box-icon bg-success elevation-1" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff"><i class="fas fa-comments"></i></span>
+
+                    <div class="info-box-content">
+                      <span class="info-box-text">Comments</span>
+                      <span class="info-box-number">{{ comment_count }}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+              </div>
+                
+
+
+              <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <div class="card">
+                    <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                      <h3 class="card-title">Progresses for Recent Projects</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                      {% if recent_projects %}
+                        {% for item in recent_projects %}
+                        <a href="{% url 'project:project_detail' item.id %}">
+                            <b style="color: grey;">{{ item.title }} in {{ item.status }}%</b><br />
+                            <div class="progress mb-3">
+                              <div class="progress-bar bg-success" role="progressbar" aria-valuenow="{{ item.status }}" aria-valuemin="0"
+                                   aria-valuemax="100" style="width: {{ item.status }}%; background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                              </div>
+                            </div>
+                        </a>
+                        {% endfor %}
+
+                      {% else %}
+                        <p>Sorry, Nothing Yet!</p>
+                      {% endif %}
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+                  <!-- /.card -->
+                </div>
+              </div>
+
+
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card">
+                    <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                      <h3 class="card-title">Recent Activities</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                      <!-- we are adding the accordion ID so Bootstrap's collapse plugin detects it -->
+                      <div id="accordion">
+
+                        <div class="card card-primary">
+                          <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                            <h4 class="card-title w-100">
+                              <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+                                Recent Projects:
+                              </a>
+                            </h4>
+                          </div>
+                          <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                            <div class="card-body">
+                              <div class="table-responsive">
+                                <table class="table m-0">
+                                  <thead>
+                                  <tr>
+                                    <th>Work Order ID</th>
+                                    <th>Status</th>
+                                    <th>Delivery Date</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+                                    {% if recent_projects %}
+
+                                      {% for item in recent_projects %}
+                                      <tr>
+                                        <td><a href="#">{{ item.project_id }}</a></td>
+                                        <td><a href="#">{{ item.status }}</a></td>
+                                        <td>
+                                          <div class="sparkbar" data-color="#00a65a" data-height="20">{{ item.delivery_date }}</div>
+                                        </td>
+                                      </tr>
+                                      {% endfor %}
+
+                                    {% else %}
+                                      <p>Sorry, Nothing Yet!</p>
+                                    {% endif %}
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="card card-success">
+                          <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                            <h4 class="card-title w-100">
+                              <a class="d-block w-100" data-toggle="collapse" href="#collapseFour">
+                                Recent Briefs:
+                              </a>
+                            </h4>
+                          </div>
+                          <div id="collapseFour" class="collapse" data-parent="#accordion">
+                            <div class="card-body">
+                              <div class="table-responsive">
+                                <table class="table m-0">
+                                  <thead>
+                                  <tr>
+                                    <th>Price</th>
+                                    <th>Time Range</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+                                    {% if recent_briefs %}
+
+                                      {% for item in recent_briefs %}
+                                      <tr>
+                                        <td><a href="#">N{{ item.max_price }}</a></td>
+                                        <td>
+                                          <div class="sparkbar" data-color="#00a65a" data-height="20">{{ item.time_range }}</div>
+                                        </td>
+                                      </tr>
+                                      {% endfor %}
+
+                                    {% else %}
+                                      <p>Sorry, Nothing Yet!</p>
+                                    {% endif %}
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div class="card card-danger">
+                          <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                            <h4 class="card-title w-100">
+                              <a class="d-block w-100" data-toggle="collapse" href="#collapseTwo">
+                                Recent Comments:
+                              </a>
+                            </h4>
+                          </div>
+                          <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                            <div class="card-body">
+                              <table class="table m-0">
+                                <thead>
+                                <tr>
+                                  <th>Titles</th>
+                                  <th>Departments</th>
+                                  <th>Dates</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                              {% if recent_comments %}
+
+                                {% for item in recent_comments %}
+                                <tr>
+                                  <td><a href="#">{{ item.title }}</a></td>
+                                  <td><a href="#">{{ item.commenter }}</a></td>
+                                  <td>
+                                    <div class="sparkbar" data-color="#00a65a" data-height="20">{{ item.pub_date }}</div>
+                                  </td>
+                                </tr>
+                                {% endfor %}
+
+                              {% else %}
+                                <p>Sorry, Nothing Yet!</p>
+                              {% endif %}
+                            </tbody>
+                          </table>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card card-success">
+                          <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                            <h4 class="card-title w-100">
+                              <a class="d-block w-100" data-toggle="collapse" href="#collapseThree">
+                                Recent Clients:
+                              </a>
+                            </h4>
+                          </div>
+                          <div id="collapseThree" class="collapse" data-parent="#accordion">
+                            <div class="card-body">
+                              <table class="table m-0">
+                                <thead>
+                                <tr>
+                                  <th>Names</th>
+                                  <th>Phones</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                              {% if recent_clients %}
+
+                                {% for item in recent_clients %}
+                                <tr>
+                                  <td><a href="#">{{ item.name }}</a></td>
+                                  <td><a href="#">{{ item.phone }}</a></td>
+                                  <td>
+                                    <div class="sparkbar" data-color="#00a65a" data-height="20">{{ item.pub_date }}</div>
+                                  </td>
+                                </tr>
+                                {% endfor %}
+
+                              {% else %}
+                                <p>Sorry, Nothing Yet!</p>
+                              {% endif %}
+                            </tbody>
+                          </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+                  <!-- /.card -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-6">
+                  <div class="card">
+                    <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                      <h3 class="card-title">Latest Activities.</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            {% if project_images %}
+                              <div class="carousel-item">
+                              {% for item in project_images %}
+                                <img class="d-block w-100" src="{{ item.image.url }}" alt="Second slide">
+                                <hr>
+                                <small>Image by uploaded by: {{ item.uploader }}</small>
+                              {% endfor %}
+
+                            {% else %}
+                              <p>Sorry, Nothing Yet!</p>
+                              </div>
+                            {% endif %}  
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="sr-only">Next</span>
+                        </a>
+                      </div>
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+                  <!-- /.card -->
+                </div>
+                <!-- /.col -->
+              </div>
+
+
+
+            {% else %}
+
+              <p>Still Under Production!</p>
+
+            {% endif %}
+
+
+
+
+
+
+
         </div>
       </div>
       <!-- /.card -->

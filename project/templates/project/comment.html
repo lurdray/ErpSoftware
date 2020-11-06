@@ -1,0 +1,105 @@
+ {% extends 'department/base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<style type="text/css">
+  .btn-primary{
+    background: linear-gradient(to right,#6f448b, #ED5565);
+    transition
+  }
+  .btn-primary:hover{
+    background: linear-gradient(to right,#34495e, #6f448b);
+    transition: opacity 1s linear;
+  }
+</style>
+
+
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card card-primary card-outline">
+        <div class="card-header">
+          <h5 class="m-0">Project Comment Session</h5>
+        </div>
+        <div class="card-body">
+
+           <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="card card-primary">
+                    <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                      <h3 class="card-title">{{ project.title }}'s Full Details</h3>
+                    </div>
+
+                    <div class="card-body p-0">
+                      <br />
+                      <div class="container">
+                        {% if comments %}
+                            {% for item in comments %}
+                              <p>
+                                <b>{{ item.title }}:</b><br />
+                                {{ item.comment }}.<br />
+                                <small>- from {{ item.commenter }}.</small>
+                                <hr>
+                              </p>
+                            {% endfor %}
+
+                            {% else %}
+                            <br />
+                            <p>Sorry, No Comments yet for this Project.</p>
+
+                        {% endif %}
+                      </div>
+                    </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="card card-primary">
+                    <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                      <h3 class="card-title">Comment</h3>
+                    </div>
+
+                    <div class="card-body p-0">
+                      <form method="post">
+                          {% csrf_token %}
+                          <div class="card-body">
+                            <div class="form-group">
+                              <label for="exampleInputEmail1">Title</label>
+                              <input required="required" name="title" type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter Comment Title">
+                            </div>
+                            <div class="form-group">
+                              <label>Comment:</label><small>(Kindly leave a comment for this project!)</small>
+                              <textarea required="required" name="project_comment" class="form-control" rows="8" placeholder="Enter comment for this project."></textarea>
+                            </div>
+
+                          </div>
+
+                          <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                          </div>
+
+                        </form>
+                    </div>
+                </div>
+              </div>
+          </div>
+
+        </div>
+          
+          
+
+        </div>
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+
+
+
+
+{% endblock %}

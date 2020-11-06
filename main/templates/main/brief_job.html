@@ -39,11 +39,25 @@
                   </div>
                   <!-- /.card-header -->
                   <!-- form start -->
-                  <form method="post">
+                  <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <div class="card-body">   
+                    <div class="card-body">
+
                       <div class="form-group">
-                        <label>Job Description</label>
+                        <label for="exampleInputFile">Upload Images</label>
+                        <div class="input-group">
+                          <div class="custom-file">
+                            <input name="project_image" type="file" class="custom-file-input" id="exampleInputFile">
+                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                          </div>
+                          <div class="input-group-append">
+                            <span class="input-group-text">Upload</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label>Order Details</label>
                         <textarea required="required" name="description" class="form-control" rows="8" placeholder="Enter Job Description"></textarea>
                       </div>    
                       <div class="form-group">
@@ -133,3 +147,17 @@
 
 
 {% endblock %}
+
+
+                      <div class="form-group">
+                        <label for="exampleInputFile">Upload Images</label>
+                        <div class="input-group">
+                          <div class="custom-file">
+                            <input name="work_order" type="file" class="custom-file-input" id="exampleInputFile">
+                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                          </div>
+                          <div class="input-group-append">
+                            <span class="input-group-text">Upload</span>
+                          </div>
+                        </div>
+                      </div>

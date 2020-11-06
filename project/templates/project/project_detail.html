@@ -32,6 +32,45 @@
                       <p id="ray_counter"></p>
                       <b>{{ counter }}</b>
 
+                      {% if department.name != "project-service" %}
+                        <hr>
+                        <b>Submit a <a href="{% url 'project:project_comment' project.id %}">Comment</a> for this project</b>
+                        <br />
+                        <small>E.g: Explain why you would attend to it late.</small><br />
+                        <small>E.g: Send a message accross to the project-service regarding this project.</small>
+                        <br />
+                        <hr>
+
+                      {% elif department.name == "project-service" %}
+                        <hr>
+                        <b>See <a href="{% url 'project:project_comment' project.id %}">All Comments</a> Submitted to this project!.</b>
+                        <br /><br />
+
+                      {% else %}
+                        <p>Nothing Yet!</p>
+
+                      {% endif %}
+
+                      <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                          <div class="form-group">
+                            <label for="exampleInputEmail1">Info</label>
+                            <input name="info" type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter Some Info for this Image">
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputFile">Upload Images</label>
+                            <div class="input-group">
+                              <div class="custom-file">
+                                <input name="project_image" type="file" class="custom-file-input" id="exampleInputFile">
+                                <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                              </div>
+                              <div class="input-group-append">
+                                <span><button type="submit" class="btn btn-primary" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">Upload</button></span>
+                              </div>
+                            </div>
+                          </div>
+                      </form>
 
                     </div>
                   </div>
@@ -55,7 +94,7 @@
                               <div>
                                 Project Details
                                 <span class="product-description">
-                                  {{ project.title }} | {{ project.project_id }}
+                                  {{ project.title }} | {{ project.project_id }} | <a href="{% url 'project:project_gallery' project.id %}">Gallery</a>
                                 </span>
                               </div>
                             </li>
@@ -64,7 +103,7 @@
                               <div>
                                 Production Status
                                 <span class="product-description">
-                                  {{ project.status }}
+                                  <b>{{ project.status }}%</b>
                                 </span>
                               </div>
                             </li>
@@ -110,6 +149,62 @@
 
                             {% endif %}
 
+                            {% if department.name == "store" or department.name == "project-service" or department.name == "ict" %}
+
+                            <li class="item">
+                              <div>
+                                Material Requested
+                                <span class="product-description">
+
+                                    {% if project.material_requested %}
+                                    <a href="{{ project.material_requested.url }}" download> Material Requested </a>
+                                    {% else %}
+                                      <b>Sorry, Nothing Yet!</b>
+                                    {% endif %}
+
+                                </span>
+                              </div>
+                            </li>
+
+                            <li class="item">
+                              <div>
+                                Material Issued
+                                <span class="product-description">
+
+                                    {% if project.material_issued %}
+                                    <a href="{{ project.material_issued.url }}" download> Material Issued </a>
+                                    {% else %}
+                                      <b>Sorry, Nothing Yet!</b>
+                                    {% endif %}
+
+                                </span>
+                              </div>
+                            </li>
+
+                            
+
+                            {% endif %}
+
+
+                             {% if department.name == "supply-chain" or department.name == "project-service" or department.name == "ict" %}
+
+                                <li class="item">
+                                  <div>
+                                    Supply Chain
+                                    <span class="product-description">
+                                      {% if project.supply == True %}
+                                        <b style="color: green;">Yes!, the Supply-Chain has attended to this project!</b>
+
+                                      {% else %}
+                                        <b style="color: red;">No!, the Supply-Chain has not attended to this project!</b>
+                                      {% endif %}
+                                    </span>
+                                  </div>
+                                </li>
+                            
+
+                            {% endif %}
+
 
 
                             {% if project.project_type == "not_upholstery" %}
@@ -119,11 +214,11 @@
 
                               <li class="item">
                                 <div>
-                                  Optimized Production Drawings
+                                  Optimized Cutlist
                                   <span class="product-description">
 
                                       {% if project.optimized_production_drawing %}
-                                      <a href="{{ project.optimized_production_drawing.url }}" download> Optimized Production Drawing </a>
+                                      <a href="{{ project.optimized_production_drawing.url }}" download> Optimized Cutlist </a>
                                       {% else %}
                                         <b>Sorry, Nothing Yet!</b>
                                       {% endif %}
@@ -157,10 +252,10 @@
                                     Edge Banding Details
                                     <span class="product-description">
                                       {% if project.edge_banding_detail == True %}
-                                        <b style="color: green;">Yes!, this project has reached the !</b>
+                                        <b style="color: green;">Yes!, this project has reached the Edge Banding Unit!</b>
 
                                       {% else %}
-                                        <b style="color: red;">No!, this project hasn't been assesmbled!</b>
+                                        <b style="color: red;">No!, this project hasn't reached the Edge Banding Unit!</b>
                                       {% endif %}
                                     </span>
                                   </div>
@@ -262,6 +357,23 @@
                                 </div>
                               </li>
 
+
+
+                              <li class="item">
+                                <div>
+                                  Spray Details
+                                  <span class="product-description">
+                                    {% if project.spray == True %}
+                                      <b style="color: green;">Yes!, this project has been sprayed!</b>
+
+                                    {% else %}
+                                      <b style="color: red;">No!, this project hasn't been sprayed!</b>
+                                    {% endif %}
+                                  </span>
+                                </div>
+                              </li>
+
+
                               <li class="item">
                                 <div>
                                   Upholsters
@@ -299,19 +411,7 @@
                               </li>
 
 
-                              <li class="item">
-                                <div>
-                                  Spray Details
-                                  <span class="product-description">
-                                    {% if project.spray == True %}
-                                      <b style="color: green;">Yes!, this project has been sprayed!</b>
-
-                                    {% else %}
-                                      <b style="color: red;">No!, this project hasn't been sprayed!</b>
-                                    {% endif %}
-                                  </span>
-                                </div>
-                              </li>
+                            
 
 
 
@@ -393,6 +493,410 @@
               </div>
 
 
+              {% if department.name == "project-service" %}
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+
+                  {% if project.project_type == "not_upholstery" %}
+
+                    <div class="row">
+                      <div class="col-lg-12 col-md-12 col-sm-12">
+
+                        <div class="card card-primary">
+                          <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                            <h3 class="card-title">Cutlist</h3>
+                          </div>
+
+                            <div class="card-body">
+                              <b>Standard Time: </b><small>{{ project.cutlist_stime }}</small>
+                              <hr>
+                              <b>Real Time: </b><small>{{ project.cutlist_rtime }}</small>
+                            </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  {% elif project.project_type == "upholstery" %}
+
+                    <div class="row">
+                      <div class="col-lg-12 col-md-12 col-sm-12">
+
+                        <div class="card card-primary">
+                          <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                            <h3 class="card-title">Upholstery Design</h3>
+                          </div>
+
+                            <div class="card-body">
+                              <b>Standard Time: </b><small>{{ project.u_design_stime }}</small>
+                              <hr>
+                              <b>Real Time: </b><small>{{ project.u_design_rtime }}</small>
+                            </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="row">
+                      <div class="col-lg-12 col-md-12 col-sm-12">
+
+                        <div class="card card-primary">
+                          <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                            <h3 class="card-title">Upholstery Cutlist</h3>
+                          </div>
+
+                            <div class="card-body">
+                              <b>Standard Time: </b><small>{{ project.cutlist_stime }}</small>
+                              <hr>
+                              <b>Real Time: </b><small>{{ project.cutlist_rtime }}</small>
+                            </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+                  {% else %}
+                    <p>Sorry, Nothing Yet!</p>
+
+                  {% endif %}
+
+
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                      <div class="card card-primary">
+                        <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                          <h3 class="card-title">Material Estimate</h3>
+                        </div>
+
+                          <div class="card-body">
+                            <b>Standard Time: </b><small>{{ project.materials_stime }}</small>
+                            <hr>
+                            <b>Real Time: </b><small>{{ project.materials_rtime }}</small>
+                          </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                      <div class="card card-primary">
+                        <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                          <h3 class="card-title">Store</h3><small>(Material Requested.)</small>
+                        </div>
+
+                          <div class="card-body">
+                            <b>Standard Time: </b><small>{{ project.store_requested_stime }}</small>
+                            <hr>
+                            <b>Real Time: </b><small>{{ project.store_requested_rtime }}</small>
+                          </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                      <div class="card card-primary">
+                        <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                          <h3 class="card-title">Supply Chain</h3>
+                        </div>
+
+                          <div class="card-body">
+                            <b>Standard Time: </b><small>{{ project.supply_stime }}</small>
+                            <hr>
+                            <b>Real Time: </b><small>{{ project.supply_rtime }}</small>
+                          </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                      <div class="card card-primary">
+                        <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                          <h3 class="card-title">Store</h3><small>(Material Issued.)</small>
+                        </div>
+
+                          <div class="card-body">
+                            <b>Standard Time: </b><small>{{ project.store_issued_stime }}</small>
+                            <hr>
+                            <b>Real Time: </b><small>{{ project.store_issued_rtime }}</small>
+                          </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+
+                  {% if project.project_type == "not_upholstery" %}
+
+                      <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+                          <div class="card card-primary">
+                            <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                              <h3 class="card-title">Cutting</h3>
+                            </div>
+
+                              <div class="card-body">
+                                <b>Standard Time: </b><small>{{ project.cutting_stime }}</small>
+                                <hr>
+                                <b>Real Time: </b><small>{{ project.cutting_rtime }}</small>
+                              </div>
+
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+                          <div class="card card-primary">
+                            <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                              <h3 class="card-title">Edge Banding</h3>
+                            </div>
+
+                              <div class="card-body">
+                                <b>Standard Time: </b><small>{{ project.edge_banding_stime }}</small>
+                                <hr>
+                                <b>Real Time: </b><small>{{ project.edge_banding_rtime }}</small>
+                              </div>
+
+                          </div>
+                        </div>
+                      </div>
+
+
+
+                      <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+                          <div class="card card-primary">
+                            <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                              <h3 class="card-title">CNC</h3>
+                            </div>
+
+                              <div class="card-body">
+                                <b>Standard Time: </b><small>{{ project.cnc_stime }}</small>
+                                <hr>
+                                <b>Real Time: </b><small>{{ project.cnc_rtime }}</small>
+                              </div>
+
+                          </div>
+                        </div>
+                      </div>
+
+
+
+                      <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+                          <div class="card card-primary">
+                            <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                              <h3 class="card-title">Assembly</h3>
+                            </div>
+
+                              <div class="card-body">
+                                <b>Standard Time: </b><small>{{ project.assembly_stime }}</small>
+                                <hr>
+                                <b>Real Time: </b><small>{{ project.assembly_rtime }}</small>
+                              </div>
+
+                          </div>
+                        </div>
+                      </div>
+
+                  {% elif project.project_type == "upholstery" %}
+                      <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+                          <div class="card card-primary">
+                            <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                              <h3 class="card-title">Wood Section</h3>
+                            </div>
+
+                              <div class="card-body">
+                                <b>Standard Time: </b><small>{{ project.frame_stime }}</small>
+                                <hr>
+                                <b>Real Time: </b><small>{{ project.frame_rtime }}</small>
+                              </div>
+
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+                          <div class="card card-primary">
+                            <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                              <h3 class="card-title">Spraying</h3>
+                            </div>
+
+                              <div class="card-body">
+                                <b>Standard Time: </b><small>{{ project.spray_stime }}</small>
+                                <hr>
+                                <b>Real Time: </b><small>{{ project.spray_rtime }}</small>
+                              </div>
+
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+                          <div class="card card-primary">
+                            <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                              <h3 class="card-title">Carpentry</h3>
+                            </div>
+
+                              <div class="card-body">
+                                <b>Standard Time: </b><small>{{ project.carpenter_stime }}</small>
+                                <hr>
+                                <b>Real Time: </b><small>{{ project.carpenter_rtime }}</small>
+                              </div>
+
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+                          <div class="card card-primary">
+                            <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                              <h3 class="card-title">Foaming</h3>
+                            </div>
+
+                              <div class="card-body">
+                                <b>Standard Time: </b><small>{{ project.foaming_stime }}</small>
+                                <hr>
+                                <b>Real Time: </b><small>{{ project.foaming_rtime }}</small>
+                              </div>
+
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+                          <div class="card card-primary">
+                            <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                              <h3 class="card-title">Tailoring</h3>
+                            </div>
+
+                              <div class="card-body">
+                                <b>Standard Time: </b><small>{{ project.tailoring_stime }}</small>
+                                <hr>
+                                <b>Real Time: </b><small>{{ project.tailoring_rtime }}</small>
+                              </div>
+
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+                          <div class="card card-primary">
+                            <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                              <h3 class="card-title">Tacking</h3>
+                            </div>
+
+                              <div class="card-body">
+                                <b>Standard Time: </b><small>{{ project.tacking_stime }}</small>
+                                <hr>
+                                <b>Real Time: </b><small>{{ project.tacking_rtime }}</small>
+                              </div>
+
+                          </div>
+                        </div>
+                      </div>
+
+
+                  {% else %}
+                    <p>Sorry nothing Yet!</p>
+
+                  {% endif %}
+
+
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                      <div class="card card-primary">
+                        <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                          <h3 class="card-title">Cleaning</h3>
+                        </div>
+
+                          <div class="card-body">
+                            <b>Standard Time: </b><small>{{ project.cleaning_stime }}</small>
+                            <hr>
+                            <b>Real Time: </b><small>{{ project.cleaning_rtime }}</small>
+                          </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                      <div class="card card-primary">
+                        <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                          <h3 class="card-title">Dispatch</h3>
+                        </div>
+
+                          <div class="card-body">
+                            <b>Standard Time: </b><small>{{ project.dispatch_stime }}</small>
+                            <hr>
+                            <b>Real Time: </b><small>{{ project.dispatch_rtime }}</small>
+                          </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                      <div class="card card-primary">
+                        <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                          <h3 class="card-title">Installation</h3>
+                        </div>
+
+                          <div class="card-body">
+                            <b>Standard Time: </b><small>{{ project.installation_stime }}</small>
+                            <hr>
+                            <b>Real Time: </b><small>{{ project.installation_rtime }}</small>
+                          </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+                </div>
+
+
+
+
+                {% endif %}
+
 
 
               {% if department.name == "design" %}
@@ -429,20 +933,25 @@
                   <div class="col-lg-4 col-md-4 col-sm-12">
                     <div class="card card-primary">
                         <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
-                          <h3 class="card-title">Submit Optimized Production Drawing for this project.</h3>
+                          <h3 class="card-title">Submit Optimized Cutlist for this project.</h3>
                         </div>
 
+                        
 
 
                         <form method="post" enctype="multipart/form-data">
                           {% csrf_token %}
                           <div class="card-body">   
-
+                            <small>Attend to this project on or before:<br />
+                            <b>{{ project.cutlist_stime }}</b>
+                            </small>
+                            <hr>
+                            <br />
                             <div class="form-group">
-                              <label for="exampleInputFile">Optimized Production Drawing</label>
+                              <label for="exampleInputFile">Optimized Cutlist</label>
                               <div class="input-group">
                                 <div class="custom-file">
-                                  <input name="optimized_production_drawing" type="file" class="custom-file-input" id="exampleInputFile">
+                                  <input name="optimized_production_drawing" type="file" class="custom-file-input" id="exampleInputFile" required="required">
                                   <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                 </div>
                                 <div class="input-group-append">
@@ -486,11 +995,17 @@
                           {% csrf_token %}
                           <div class="card-body">   
 
+                            <small>Attend to this project on or before:<br />
+                            <b>{{ project.materials_stime }}</b>
+                            </small>
+                            <hr>
+                            <br />
+
                             <div class="form-group">
                               <label for="exampleInputFile">Material Estimate</label>
                               <div class="input-group">
                                 <div class="custom-file">
-                                  <input name="material_estimate" type="file" class="custom-file-input" id="exampleInputFile">
+                                  <input name="material_estimate" type="file" class="custom-file-input" id="exampleInputFile" required="required">
                                   <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                 </div>
                                 <div class="input-group-append">
@@ -516,6 +1031,120 @@
                 {% endif %}
 
 
+                {% if department.name == "store" %}
+
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="card card-primary">
+                        <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                          <h3 class="card-title">Submit Requested & Issued Materials for this project.</h3>
+                        </div>
+
+
+
+                        <form method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                          <div class="card-body">  
+
+                          <small>Attend to this project on or before:<br />
+                            <b>{{ project.store_requested_stime }}</b>
+                            </small>
+                            <hr>
+                            <br /> 
+
+                            <div class="form-group">
+                              <label for="exampleInputFile">Requested Materials</label>
+                              <div class="input-group">
+                                <div class="custom-file">
+                                  <input name="material_requested" type="file" class="custom-file-input" id="exampleInputFile">
+                                  <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                </div>
+                                <div class="input-group-append">
+                                  <span class="input-group-text">Upload</span>
+                                </div>
+                              </div>
+                            </div>
+
+                            <small>Attend to this project on or before:<br />
+                            <b>{{ project.store_issued_stime }}</b>
+                            </small>
+                            <hr>
+                            <br />
+
+
+                            <div class="form-group">
+                              <label for="exampleInputFile">Issued Materials</label>
+                              <div class="input-group">
+                                <div class="custom-file">
+                                  <input name="material_issued" type="file" class="custom-file-input" id="exampleInputFile">
+                                  <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                </div>
+                                <div class="input-group-append">
+                                  <span class="input-group-text">Upload</span>
+                                </div>
+                              </div>
+                            </div>
+
+
+
+                            </div>
+                          </div>
+                        
+                        <div class="card-footer">
+                          <small>Submit the requested & Issued Materials for this project</small>
+                          <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary">Send</button>
+                        </div>
+
+                        </form>
+
+                    </div>
+                  </div>
+
+                {% endif %}
+
+                {% if department.name == "supply-chain" %}
+
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                  <div class="card card-primary">
+                      <div class="card-header" style="background: linear-gradient(to right,#6f448b, #ED5565); color: #fff">
+                        <h3 class="card-title">Supply-Chain Unit.</h3>
+                      </div>
+
+                        <div class="card-body">   
+                          <small>Attend to this project on or before:<br />
+                            <b>{{ project.supply_stime }}</b>
+                            </small>
+                            <hr>
+                            <br />
+
+                          <form method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                          <div class="card-body">   
+
+                            <div class="form-check">
+                              <input name="supply_chain_detail" type="checkbox" class="form-check-input" id="exampleCheck1">
+                              <label class="form-check-label" for="exampleCheck1">Confirm</label>
+                            </div>
+
+                            </div>
+                          </div>
+                        
+                        <div class="card-footer">
+                          <small>Confirm that the Supply-Chain unit has attended to this project.</small>
+                          <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+
+                        </form>
+
+
+
+                        </div>
+
+                  </div>
+                </div>
+
+                {% endif %}
+
+
 
                 {% if department.name == "cutting" %}
 
@@ -526,6 +1155,11 @@
                       </div>
 
                         <div class="card-body">   
+                          <small>Attend to this project on or before:<br />
+                            <b>{{ project.cutting_stime }}</b>
+                            </small>
+                            <hr>
+                            <br />
 
                           <form method="post" enctype="multipart/form-data">
                           {% csrf_token %}
@@ -533,7 +1167,7 @@
 
                             <div class="form-check">
                               <input name="cutting_detail" type="checkbox" class="form-check-input" id="exampleCheck1">
-                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                              <label class="form-check-label" for="exampleCheck1">Confirm that you have attended to this project.</label>
                             </div>
 
                             </div>
@@ -541,7 +1175,7 @@
                         
                         <div class="card-footer">
                           <small>Submit Cutting Details for this project</small>
-                          <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary">Submit</button>
+                          <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary">Confirm</button>
                         </div>
 
                         </form>
@@ -565,6 +1199,11 @@
                       </div>
 
                         <div class="card-body">   
+                          <small>Attend to this project on or before:<br />
+                            <b>{{ project.edge_banding_stime }}</b>
+                            </small>
+                            <hr>
+                            <br />
 
                           <form method="post" enctype="multipart/form-data">
                           {% csrf_token %}
@@ -572,15 +1211,15 @@
 
                             <div class="form-check">
                               <input name="edge_banding_detail" type="checkbox" class="form-check-input" id="exampleCheck1">
-                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                              <label class="form-check-label" for="exampleCheck1">Confirm that you have attended to this project.</label>
                             </div>
 
                             </div>
                           </div>
                         
                         <div class="card-footer">
-                          <small>Submit Cutting Details for this project</small>
-                          <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary">Submit</button>
+                          <small>Submit the Edge Banding Details for this project</small>
+                          <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary">Confirm</button>
                         </div>
 
                         </form>
@@ -604,7 +1243,12 @@
                         <h3 class="card-title">Upload CNC Details</h3>
                       </div>
 
-                        <div class="card-body">   
+                        <div class="card-body">  
+                          <small>Attend to this project on or before:<br />
+                            <b>{{ project.cnc_stime }}</b>
+                            </small>
+                            <hr>
+                            <br />
 
                           <form method="post" enctype="multipart/form-data">
                           {% csrf_token %}
@@ -612,7 +1256,7 @@
 
                             <div class="form-check">
                               <input name="cnc_detail" type="checkbox" class="form-check-input" id="exampleCheck1">
-                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                              <label class="form-check-label" for="exampleCheck1">Confirm that you have attended to this project.</label>
                             </div>
 
                             </div>
@@ -620,7 +1264,7 @@
                         
                         <div class="card-footer">
                           <small>Submit Cutting Details for this project</small>
-                          <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary">Submit</button>
+                          <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary">Confirm</button>
                         </div>
 
                         </form>
@@ -644,19 +1288,24 @@
                       </div>
 
                         <div class="card-body">
+                          <small>Attend to this project on or before:<br />
+                            <b>{{ project.assembly_stime }}</b>
+                            </small>
+                            <hr>
+                            <br />
 
                           <form method="post" enctype="multipart/form-data">
                           {% csrf_token %}
                             <div class="form-check">
                               <input name="assembly_detail" type="checkbox" class="form-check-input" id="exampleCheck1">
-                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                              <label class="form-check-label" for="exampleCheck1">Confirm that you have attended to this project.</label>
                             </div>
 
                             </div>
                           </div>
                         
                         <div class="card-footer">
-                          <small>click the box above and confirm!</small>
+                          <small>Click the box above and confirm!</small>
                           <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary">Confirm</button>
                         </div>
 
@@ -752,6 +1401,28 @@
                   </div>
 
 
+                  <div class="small-box bg-success">
+                    <div class="inner">
+                      <h4><b>Spraying Unit.</b></h4>
+
+                      <p>Upholstery Section</p>
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="form-check">
+                         <input name="spraying" type="checkbox" class="form-check-input" id="exampleCheck1">
+                         <label class="form-check-label" for="exampleCheck1">Spraying</label>
+                      </div>
+                      </li>
+                    </ul>
+                    
+                    <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary"> Confirm <i class="fas fa-arrow-circle-right"></i></buttton>
+                  </div>
+
+
                   <div class="small-box bg-danger">
                     <div class="inner">
                       <h4><b>Upholsters</b></h4>
@@ -761,7 +1432,7 @@
                         <li>
                           <div class="form-check">
                              <input name="carpenter" type="checkbox" class="form-check-input" id="exampleCheck1">
-                             <label class="form-check-label" for="exampleCheck1">Carpenter</label>
+                             <label class="form-check-label" for="exampleCheck1">Carpentry</label>
                           </div>
                         </li>
                         <li>
@@ -790,26 +1461,7 @@
                     <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary"> Confirm <i class="fas fa-arrow-circle-right"></i></button>
                   </div>
 
-                  <div class="small-box bg-success">
-                    <div class="inner">
-                      <h4><b>Spraying Unit.</b></h4>
-
-                      <p>Upholstery Section</p>
-                    </div>
-                    <div class="icon">
-                      <i class="ion ion-stats-bars"></i>
-                    </div>
-                    <ul>
-                      <li>
-                        <div class="form-check">
-                         <input name="spraying" type="checkbox" class="form-check-input" id="exampleCheck1">
-                         <label class="form-check-label" for="exampleCheck1">Spraying</label>
-                      </div>
-                      </li>
-                    </ul>
-                    
-                    <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary"> Confirm <i class="fas fa-arrow-circle-right"></i></buttton>
-                  </div>
+                  
 
                   </form>
 
@@ -831,18 +1483,24 @@
 
                         <div class="card-body">
 
+                          <small>Attend to this project on or before:<br />
+                            <b>{{ project.cleaning_stime }}</b>
+                            </small>
+                            <hr>
+                            <br />
+
                           <form method="post" enctype="multipart/form-data">
                           {% csrf_token %}
                             <div class="form-check">
                               <input name="cleaning" type="checkbox" class="form-check-input" id="exampleCheck1">
-                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                              <label class="form-check-label" for="exampleCheck1">Confirm that you have attended to this project.</label>
                             </div>
 
                             </div>
                           </div>
                         
                         <div class="card-footer">
-                          <small>click the box above and confirm!</small>
+                          <small>Click the box above and confirm!</small>
                           <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary">Confirm</button>
                         </div>
 
@@ -867,19 +1525,24 @@
                       </div>
 
                         <div class="card-body">
+                          <small>Attend to this project on or before:<br />
+                            <b>{{ project.dispatch_stime }}</b>
+                            </small>
+                            <hr>
+                            <br />
 
                           <form method="post" enctype="multipart/form-data">
                           {% csrf_token %}
                             <div class="form-check">
                               <input name="dispatch" type="checkbox" class="form-check-input" id="exampleCheck1">
-                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                              <label class="form-check-label" for="exampleCheck1">Confirm that you have attended to this project.</label>
                             </div>
 
                             </div>
                           </div>
                         
                         <div class="card-footer">
-                          <small>click the box above and confirm!</small>
+                          <small>Click the box above and confirm!</small>
                           <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary">Confirm</button>
                         </div>
 
@@ -904,19 +1567,24 @@
                       </div>
 
                         <div class="card-body">
+                          <small>Attend to this project on or before:<br />
+                            <b>{{ project.installation_stime }}</b>
+                            </small>
+                            <hr>
+                            <br />
 
                           <form method="post" enctype="multipart/form-data">
                           {% csrf_token %}
                             <div class="form-check">
                               <input name="installation" type="checkbox" class="form-check-input" id="exampleCheck1">
-                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                              <label class="form-check-label" for="exampleCheck1">Confirm that you have attended to this project.</label>
                             </div>
 
                             </div>
                           </div>
                         
                         <div class="card-footer">
-                          <small>click the box above and confirm!</small>
+                          <small>Click the box above and confirm!</small>
                           <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary">Confirm</button>
                         </div>
 
@@ -946,14 +1614,14 @@
                           {% csrf_token %}
                             <div class="form-check">
                               <input name="spray" type="checkbox" class="form-check-input" id="exampleCheck1">
-                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                              <label class="form-check-label" for="exampleCheck1">Confirm that you have attended to this project.</label>
                             </div>
 
                             </div>
                           </div>
                         
                         <div class="card-footer">
-                          <small>click the box above and confirm!</small>
+                          <small>Click the box above and confirm!</small>
                           <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary">Confirm</button>
                         </div>
 
@@ -984,14 +1652,14 @@
                           {% csrf_token %}
                             <div class="form-check">
                               <input name="frame" type="checkbox" class="form-check-input" id="exampleCheck1">
-                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                              <label class="form-check-label" for="exampleCheck1">Confirm that you have attended to this project.</label>
                             </div>
 
                             </div>
                           </div>
                         
                         <div class="card-footer">
-                          <small>click the box above and confirm!</small>
+                          <small>Click the box above and confirm!</small>
                           <button style="background: linear-gradient(to right,#6f448b, #ED5565);" type="submit" class="btn btn-primary">Confirm</button>
                         </div>
 
@@ -1057,16 +1725,18 @@
             </div>
 
 
+
       </div>
       <!-- /.card -->
+
+
 
 
         
 
     </section>
     <!-- /.content -->
-
-
+          <br />
 
 
 {% endblock %}
